@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.5 on win32)" generated="20220723 13:51:02.358" rpa="false" schemaversion="3">
+<suite id="s1" name="Test" source="D:\New folder\test">
+<suite id="s1-s1" name="Test Api Github Suite" source="D:\New folder\test\test_api_github_suite.robot">
+<test id="s1-s1-t1" name="TC001_Test_Count_All_Issues_From_All_Repositories" line="6">
+<kw name="Count Total Issues Open All Repositories" library="github_api">
+<var>${total_count}</var>
+<kw name="Set Variable" library="BuiltIn">
+<var>${url}</var>
+<arg>${api_host}${issues_repos_endpoint}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220723 13:51:02.633" level="INFO">${url} = https://api.github.com/search/issues?q=SeleniumHQ+type:issue+state:open</msg>
+<status status="PASS" starttime="20220723 13:51:02.633" endtime="20220723 13:51:02.633"/>
+</kw>
+<kw name="Get Request" library="request_helper">
+<var>${res}</var>
+<arg>${url}</arg>
+<msg timestamp="20220723 13:51:03.415" level="INFO">${res} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220723 13:51:02.633" endtime="20220723 13:51:03.415"/>
+</kw>
+<msg timestamp="20220723 13:51:03.424" level="INFO">${total_count} = 1421</msg>
+<status status="PASS" starttime="20220723 13:51:02.632" endtime="20220723 13:51:03.424"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:02.632" endtime="20220723 13:51:03.425"/>
+</test>
+<test id="s1-s1-t2" name="TC002_Test_Sort_Repositories_By_Last_Updated" line="9">
+<kw name="Sort Repositories By Date Updated In Desc Order" library="github_api">
+<var>${list_repos}</var>
+<kw name="Set Variable" library="BuiltIn">
+<var>${url}</var>
+<arg>${api_host}${list_repositories_sort_endpoin}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220723 13:51:03.432" level="INFO">${url} = https://api.github.com/search/repositories?q=SeleniumHQ+sort:updated-desc</msg>
+<status status="PASS" starttime="20220723 13:51:03.431" endtime="20220723 13:51:03.433"/>
+</kw>
+<kw name="Get Request" library="request_helper">
+<var>${res}</var>
+<arg>${url}</arg>
+<msg timestamp="20220723 13:51:04.584" level="INFO">${res} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220723 13:51:03.433" endtime="20220723 13:51:04.584"/>
+</kw>
+<msg timestamp="20220723 13:51:04.599" level="INFO">${list_repos} = {'total_count': 101, 'incomplete_results': False, 'items': [{'id': 210569465, 'node_id': 'MDEwOlJlcG9zaXRvcnkyMTA1Njk0NjU=', 'name': 'seleniumhq.github.io', 'full_name': 'SeleniumHQ/seleniumhq.github....</msg>
+<status status="PASS" starttime="20220723 13:51:03.430" endtime="20220723 13:51:04.599"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:03.429" endtime="20220723 13:51:04.600"/>
+</test>
+<test id="s1-s1-t3" name="TC003_Test_Repo_Has_The_Most_Watcher" line="12">
+<kw name="Get All Repositories" library="github_api">
+<var>${repos}</var>
+<kw name="Set Variable" library="BuiltIn">
+<var>${url}</var>
+<arg>${api_host}${list_repositories_endpoint}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220723 13:51:04.607" level="INFO">${url} = https://api.github.com/orgs/SeleniumHQ/repos</msg>
+<status status="PASS" starttime="20220723 13:51:04.606" endtime="20220723 13:51:04.607"/>
+</kw>
+<kw name="Get Request" library="request_helper">
+<var>${res}</var>
+<arg>${url}</arg>
+<msg timestamp="20220723 13:51:05.282" level="INFO">${res} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220723 13:51:04.607" endtime="20220723 13:51:05.282"/>
+</kw>
+<msg timestamp="20220723 13:51:05.287" level="INFO">${repos} = [{'id': 1390519, 'node_id': 'MDEwOlJlcG9zaXRvcnkxMzkwNTE5', 'name': 'selbot2', 'full_name': 'SeleniumHQ/selbot2', 'private': False, 'owner': {'login': 'SeleniumHQ', 'id': 983927, 'node_id': 'MDEyOk9yZ...</msg>
+<status status="PASS" starttime="20220723 13:51:04.605" endtime="20220723 13:51:05.287"/>
+</kw>
+<kw name="Get List Repos Name" library="data_helper">
+<var>${repos_name}</var>
+<arg>${repos}</arg>
+<msg timestamp="20220723 13:51:05.288" level="INFO">${repos_name} = ['selbot2', 'fluent-selenium', 'www.seleniumhq.org', 'selenium', 'irc-logs', 'docs', 'docker-selenium', 'mobile-spec', 'ansible-selenium', 'htmlunit-driver', 'selenium-google-code-issue-archive', 'buc...</msg>
+<status status="PASS" starttime="20220723 13:51:05.288" endtime="20220723 13:51:05.288"/>
+</kw>
+<kw name="Get Repo Has The Most Watcher" library="github_api">
+<var>${repo}</var>
+<arg>${repos_name}</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${url}</var>
+<arg>${api_host}${subscribers_endpoint}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220723 13:51:05.290" level="INFO">${url} = https://api.github.com/repos/SeleniumHQ/{}/subscribers</msg>
+<status status="PASS" starttime="20220723 13:51:05.289" endtime="20220723 13:51:05.290"/>
+</kw>
+<kw name="Get Repo Most Watcher" library="data_helper">
+<var>${repo}</var>
+<arg>${url}</arg>
+<arg>${repos_name}</arg>
+<msg timestamp="20220723 13:51:13.421" level="INFO">${repo} = ['fluent-selenium', 30]</msg>
+<status status="PASS" starttime="20220723 13:51:05.290" endtime="20220723 13:51:13.421"/>
+</kw>
+<msg timestamp="20220723 13:51:13.421" level="INFO">${repo} = ['fluent-selenium', 30]</msg>
+<status status="PASS" starttime="20220723 13:51:05.289" endtime="20220723 13:51:13.421"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:04.603" endtime="20220723 13:51:13.423"/>
+</test>
+<status status="PASS" starttime="20220723 13:51:02.383" endtime="20220723 13:51:13.427"/>
+</suite>
+<suite id="s1-s2" name="Test Message Suite" source="D:\New folder\test\test_message_suite.robot">
+<test id="s1-s2-t1" name="TC001_Test_Send_Message_Successfully" line="10">
+<kw name="Login To Application" library="login_page" type="SETUP">
+<kw name="Open Mobile Application" library="common">
+<kw name="Open Application" library="AppiumLibrary">
+<arg>${remoteUrl}</arg>
+<arg>platformName=${platform_name}</arg>
+<arg>deviceName=emulator-5554</arg>
+<arg>appPackage=${app_package}</arg>
+<arg>appActivity=${app_activity}</arg>
+<arg>automationName=${uiautomator2}</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |</doc>
+<status status="PASS" starttime="20220723 13:51:13.471" endtime="20220723 13:51:23.194"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:13.471" endtime="20220723 13:51:23.194"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="AppiumLibrary">
+<arg>${email_edit_text}</arg>
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<status status="PASS" starttime="20220723 13:51:23.194" endtime="20220723 13:51:25.192"/>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>${email_edit_text}</arg>
+<arg>${email}</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:25.194" level="INFO">Typing text 'quochuy13se03@gmail.com' into text field 'com.vsee.vsee.beta:id/loginEmailEdit'</msg>
+<status status="PASS" starttime="20220723 13:51:25.192" endtime="20220723 13:51:25.266"/>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>${password_edit_text}</arg>
+<arg>${password}</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:25.268" level="INFO">Typing text 'Vseeapp' into text field 'com.vsee.vsee.beta:id/loginPasswordEdit'</msg>
+<status status="PASS" starttime="20220723 13:51:25.267" endtime="20220723 13:51:25.828"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${btn_login}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:25.831" level="INFO">Clicking element 'com.vsee.vsee.beta:id/loginSignInBut'.</msg>
+<status status="PASS" starttime="20220723 13:51:25.829" endtime="20220723 13:51:26.414"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:13.471" endtime="20220723 13:51:26.414"/>
+</kw>
+<kw name="Navigate To Chat Page" library="home_page">
+<kw name="Wait Until Page Contains Element" library="AppiumLibrary">
+<arg>${tab_chat}</arg>
+<arg>timeout=10</arg>
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<status status="PASS" starttime="20220723 13:51:26.415" endtime="20220723 13:51:32.516"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${tab_chat}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:32.519" level="INFO">Clicking element '//android.widget.LinearLayout//*[@class='androidx.appcompat.app.ActionBar$Tab' and @index='0']'.</msg>
+<status status="PASS" starttime="20220723 13:51:32.516" endtime="20220723 13:51:32.993"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${contact}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:32.997" level="INFO">Clicking element '//android.widget.ListView//android.view.ViewGroup[@index='0']'.</msg>
+<status status="PASS" starttime="20220723 13:51:32.993" endtime="20220723 13:51:35.212"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:26.415" endtime="20220723 13:51:35.212"/>
+</kw>
+<kw name="Chat With Contact" library="chat_page">
+<var>${random_test}</var>
+<kw name="Random uuid String" library="common">
+<var>${text}</var>
+<kw name="Evaluate" library="BuiltIn">
+<var>${random_str}</var>
+<arg>uuid.uuid4()</arg>
+<arg>modules=uuid</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20220723 13:51:35.214" level="INFO">${random_str} = c80fe18c-56a2-429f-83b7-64f7c6a70967</msg>
+<status status="PASS" starttime="20220723 13:51:35.214" endtime="20220723 13:51:35.214"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${random_str}</var>
+<arg>${random_str}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220723 13:51:35.215" level="INFO">${random_str} = c80fe18c-56a2-429f-83b7-64f7c6a70967</msg>
+<status status="PASS" starttime="20220723 13:51:35.214" endtime="20220723 13:51:35.215"/>
+</kw>
+<msg timestamp="20220723 13:51:35.215" level="INFO">${text} = c80fe18c-56a2-429f-83b7-64f7c6a70967</msg>
+<status status="PASS" starttime="20220723 13:51:35.213" endtime="20220723 13:51:35.215"/>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>${chat_edit_text}</arg>
+<arg>${text}</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:35.218" level="INFO">Typing text 'c80fe18c-56a2-429f-83b7-64f7c6a70967' into text field 'com.vsee.vsee.beta:id/chatEditText'</msg>
+<status status="PASS" starttime="20220723 13:51:35.215" endtime="20220723 13:51:35.371"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${btn_send_text}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220723 13:51:35.375" level="INFO">Clicking element 'com.vsee.vsee.beta:id/chatSendBut'.</msg>
+<status status="PASS" starttime="20220723 13:51:35.371" endtime="20220723 13:51:36.072"/>
+</kw>
+<msg timestamp="20220723 13:51:36.073" level="INFO">${random_test} = c80fe18c-56a2-429f-83b7-64f7c6a70967</msg>
+<status status="PASS" starttime="20220723 13:51:35.213" endtime="20220723 13:51:36.073"/>
+</kw>
+<kw name="Check Send Message Success" library="chat_page">
+<arg>${random_test}</arg>
+<kw name="Replace String" library="String">
+<var>${message_text_locator}</var>
+<arg>${message_text}</arg>
+<arg>{{text}}</arg>
+<arg>${random_text}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<msg timestamp="20220723 13:51:36.075" level="INFO">${message_text_locator} = //android.widget.TextView[@text='c80fe18c-56a2-429f-83b7-64f7c6a70967']</msg>
+<status status="PASS" starttime="20220723 13:51:36.074" endtime="20220723 13:51:36.075"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<arg>${message_text_locator}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" starttime="20220723 13:51:36.075" endtime="20220723 13:51:36.914"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:36.074" endtime="20220723 13:51:36.915"/>
+</kw>
+<kw name="Close Mobile Application" library="common" type="TEARDOWN">
+<kw name="Close Application" library="AppiumLibrary">
+<doc>Closes the current application and also close webdriver session.</doc>
+<status status="PASS" starttime="20220723 13:51:36.916" endtime="20220723 13:51:37.287"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:36.915" endtime="20220723 13:51:37.287"/>
+</kw>
+<status status="PASS" starttime="20220723 13:51:13.471" endtime="20220723 13:51:37.288"/>
+</test>
+<status status="PASS" starttime="20220723 13:51:13.431" endtime="20220723 13:51:37.289"/>
+</suite>
+<status status="PASS" starttime="20220723 13:51:02.360" endtime="20220723 13:51:37.292"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="Test">Test</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s1" name="Test Api Github Suite">Test.Test Api Github Suite</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s2" name="Test Message Suite">Test.Test Message Suite</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
